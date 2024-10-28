@@ -10,10 +10,10 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: !secret Dialog3G_Decoder_API
+    key: !secret encryption_key
 
 ota:
-  password: !secret Dialog3G_Decoder_OTA
+  #password: !secret decoder_OTA
 
 wifi:
   ssid: !secret wifi_ssid
@@ -30,10 +30,10 @@ spi:
   mosi_pin: GPIO13
 
 sensor:
-
   - platform: xl4432_spi_sensor
     name: xl4432
     cs_pin: GPIO15
+    meter_id: [0x4E, 0x61, 0xBC]  # Define your meter ID here
 
 mqtt:
   broker: !secret Dialog3G_Decoder_BROKER
