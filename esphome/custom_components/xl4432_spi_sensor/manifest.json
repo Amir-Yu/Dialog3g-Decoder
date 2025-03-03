@@ -1,0 +1,9 @@
+{
+  "domain": "xl4432_spi_sensor",
+  "name": "XL4432 SPI Sensor",
+  "version": "1.0.0",
+  "documentation": "https://github.com/assafms/Dialog3g-Decoder",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@assafms"]
+}
