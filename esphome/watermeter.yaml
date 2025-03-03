@@ -22,8 +22,11 @@ wifi:
 captive_portal:
 
 external_components:
-  - source: custom_components
-
+#  - source: custom_components
+  - source:
+      type: local
+      path: custom_components
+      
 spi:
   clk_pin: GPIO14
   miso_pin: GPIO12
