@@ -20,22 +20,22 @@ ICACHE_RAM_ATTR void nIRQ_ISR() {
 }
 
 void Xl4432SPISensor::setup() {
-	// Retrieve the meter_id parameter from the YAML
-  	auto meter_id = this->get_meter_id();
-  	if (meter_id.has_value()) {
-    	// Update METER_ID with YAML-provided value
-    	for (size_t i = 0; i < 3 && i < meter_id.value().size(); i++) {
-      		METER_ID[i] = meter_id.value()[i];
-    	}
-  	}
-    pinMode(SS, OUTPUT);
-    digitalWrite(SS, HIGH);
-    pinMode(nIRQ_PIN, INPUT);
-    attachInterrupt(nIRQ_PIN, nIRQ_ISR, FALLING);
-    xl4432.initXl4432Registers();
+  // Retrieve the meter_id parameter from the YAML
+  if (this->meter_id_.has_value()) {
+    auto &meter_id = this->meter_id_.value();
+    if (meter_id.size() != 3) {
+      ESP_LOGE(TAG, "Invalid meter_id size. Expected 3 bytes, got %d", meter_id.size());
+    } else {
+      // Update METER_ID with YAML-provided value
+      for (size_t i = 0; i < 3; i++) {
+        METER_ID[i] = meter_id[i];
+      }
+    }
+  }
 
-	// Log the active METER_ID
-	ESP_LOGD(TAG, "Will try to communicate to read meter ID number: [%02X, %02X, %02X]", METER_ID[0], METER_ID[1], METER_ID[2]);
+  // Log the active METER_ID
+  ESP_LOGD(TAG, "Will try to communicate to read meter ID number: [%02X, %02X, %02X]", 
+           METER_ID[0], METER_ID[1], METER_ID[2]);
 }
 
 void Xl4432SPISensor::update() {
